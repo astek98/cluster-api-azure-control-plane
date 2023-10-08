@@ -7,7 +7,7 @@ packages:
 
 runcmd:
 - export USER='azureuser'
-- export HOME='/home/$USER'
+- export HOME='/home/azureuser'
 - cd $HOME
 - curl -L -o cloud-init.sh 'https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/cloud-init.sh'
 - bash cloud-init.sh | tee output.txt

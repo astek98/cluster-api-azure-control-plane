@@ -4,12 +4,12 @@ set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 
 echo "# motd ..."
-curl -L -o 01-custom 'https://raw.githubusercontent.com/scotty-c/cluster-api-dev/main/01-custom'
+curl -L -o 01-custom 'https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/01-custom'
 mv 01-custom /etc/update-motd.d/
 sudo chmod +x /etc/update-motd.d/01-custom
 
 echo "# cluster deploy script..."
-curl -L -o cluster-deploy.sh https://raw.githubusercontent.com/scotty-c/cluster-api-azure-control-plane/main/cluster-deploy.sh
+curl -L -o cluster-deploy.sh https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/cluster-deploy.sh
 sudo chmod +x cluster-deploy.sh
 
 echo "# microk8s..."

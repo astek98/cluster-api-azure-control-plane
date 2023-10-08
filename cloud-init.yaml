@@ -6,8 +6,8 @@ packages:
 - git
 
 runcmd:
-- export HOME='/home/ubuntu'
-- export USER='ubuntu'
+- export USER='azureuser'
+- export HOME='/home/$USER'
 - cd $HOME
-- curl -L -o cloud-init.sh 'https://raw.githubusercontent.com/scotty-c/cluster-api-dev/main/cloud-init.sh'
+- curl -L -o cloud-init.sh 'https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/cloud-init.sh'
 - bash cloud-init.sh | tee output.txt

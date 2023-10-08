@@ -11,7 +11,7 @@ read -p "Enter the name for the vm: " NAME
 
 az account set --subscription "$SUB"
 
-curl -L -o cloud-init.txt 'https://raw.githubusercontent.com/scotty-c/cluster-api-azure-control-plane/main/cloud-init.yaml'
+curl -L -o cloud-init.txt 'https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/cloud-init.yaml'
 
 az vm create \
   --resource-group "$RS" \

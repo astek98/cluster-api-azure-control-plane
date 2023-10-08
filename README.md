@@ -10,7 +10,7 @@ This is an open source project from canonical which will work on Windows, MacOS 
 
 Once multipass is installed just run the following 
 ```
-curl -L -o cloud-init.yaml 'https://raw.githubusercontent.com/scotty-c/cluster-api-azure-control-plane/main/cloud-init.yaml'
+curl -L -o cloud-init.yaml 'https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/cloud-init.yaml'
 multipass launch --name cluster-api --cpus 2 --mem 4G --cloud-init cloud-init.yaml
 ```
 Under the hood we are spining up a new [Ubuntu server](https://ubuntu.com/download/server) for the control plane we are going to use [microk8s](https://microk8s.io/). This will give us a super light control plane to use to deploy our Kubernetes clusters on Azure. 

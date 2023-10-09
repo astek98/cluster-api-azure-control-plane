@@ -26,7 +26,7 @@ az vm create \
 IP=$(az vm show -d  --resource-group $RS --name $NAME --query publicIps -o tsv
 )
 
-echo "Access your vm with  ssh ubuntu@$IP"
+echo "Access your vm with  ssh azureuser@$IP"
 
 rm cloud-init.txt
 

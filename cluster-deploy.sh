@@ -9,7 +9,7 @@ read -p "Enter region to deploy the cluster: "  LOCATION
 az account set --subscription "$SUB"
 
 CLUSTER_RG=cluster-api
-SP_NAME=cluster-api
+export SP_NAME=cluster-api
 
 pre_checks () {
 RG_THERE=$(az group exists --name $CLUSTER_RG)
@@ -36,7 +36,7 @@ fi
 }
 
 create_cluster () {
-AZURE_CLIENT_SECRET=$(az ad sp create-for-rbac --name $SP_NAME --role Contributor | jq -r .password)
+AZURE_CLIENT_SECRET=$(az ad sp create-for-rbac --name $SP_NAME --role Contributor --scopes="/subscriptions/$SUB | jq -r .password)
 AZURE_CLIENT_ID=$(az ad sp show --id http://$SP_NAME --query appId --output tsv)
 AZURE_TENANT_ID=$(az ad sp show --id http://$SP_NAME --query appOwnerTenantId --output tsv )
 echo ""
@@ -44,6 +44,6 @@ echo "The client secret is $AZURE_CLIENT_SECRET"
 sleep 30
 clusterctl init --infrastructure azure
 }
-
+az ad sp create-for-rbac --name "cluster-api" --role contributor --scopes="/subscriptions/ea23f33b-f226-4c3f-9c14-aabb8b63b8c8"
 pre_checks
 create_cluster

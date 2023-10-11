@@ -1,13 +1,6 @@
 #cloud-config
 package_update: true
 package_upgrade: true
-packages:
-  - apt-transport-https
-  - ca-certificates
-  - curl
-  - gnupg
-  - lsb-release
-
 
 groups:
   - docker
@@ -18,15 +11,16 @@ system_info:
 
 runcmd:
  - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
- - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+ - sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
  - curl -o clusterctl -L https://github.com/kubernetes-sigs/cluster-api/releases/download/v1.5.2/clusterctl-linux-amd64
- - install -o root -g root -m 0755 clusterctl /usr/local/bin/clusterctl
+ - sudo install -o root -g root -m 0755 clusterctl /usr/local/bin/clusterctl
  - curl -fsSL https://get.docker.com -o get-docker.sh | sudo sh get-docker.sh
  - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
- - install -o root -g root -m 0755 kind /usr/local/bin/kind
- - kind create cluster
+ -  
  - curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash 
  - curl -sL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | sudo bash
+ - kind create cluster
+
  
 
 

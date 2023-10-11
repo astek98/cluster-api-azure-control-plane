@@ -44,6 +44,6 @@ echo "The client secret is $AZURE_CLIENT_SECRET"
 sleep 30
 clusterctl init --infrastructure azure
 }
-az ad sp create-for-rbac --name "cluster-api" --role contributor --scopes="/subscriptions/ea23f33b-f226-4c3f-9c14-aabb8b63b8c8"
+
 pre_checks
 create_cluster

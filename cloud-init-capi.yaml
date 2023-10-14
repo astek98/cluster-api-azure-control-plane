@@ -1,0 +1,15 @@
+#cloud-config
+# vim: syntax=yaml
+package_update: true
+package_upgrade: true
+
+packages:
+- curl
+- jq
+
+runcmd:
+- export USER='azureuser'
+- export HOME='/home/azureuser'
+- cd $HOME
+- curl -L -o cloud-init-capi.sh 'https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/cloud-init-capi.sh'
+# - bash cloud-init-capi.sh | tee capi-output.log

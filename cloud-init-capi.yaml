@@ -7,9 +7,16 @@ packages:
 - curl
 - jq
 
+groups:
+  - docker
+
+system_info:
+  default_user:
+    groups: [ docker ]
+
 runcmd:
 - export USER='azureuser'
 - export HOME='/home/azureuser'
 - cd $HOME
 - curl -L -o cloud-init-capi.sh 'https://raw.githubusercontent.com/astek98/cluster-api-azure-control-plane/main/cloud-init-capi.sh'
-# - bash cloud-init-capi.sh | tee capi-output.log
+- bash cloud-init-capi.sh | tee capi-output.log

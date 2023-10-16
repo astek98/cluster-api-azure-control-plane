@@ -1,0 +1,5 @@
+az vm create --name ctrl-vm --resource-group k0-rg --image Ubuntu2204 --generate-ssh-keys
+
+az vm user update --name vm1-ctrl --resource-group k0-rg --username azureuser --ssh-key-value ~/.ssh/id_rsa.pub 
+
+az vm create --name vm-wrk --resource-group k0-rg --image Ubuntu2204 --generate-ssh-keys --count --ssh-key-values .\id_rsa_k0s.pub

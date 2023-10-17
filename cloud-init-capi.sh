@@ -23,6 +23,11 @@ curl -o clusterctl -fsSL https://github.com/kubernetes-sigs/cluster-api/releases
 sudo install -o root -g root -m 0755 clusterctl /usr/local/bin/clusterctl
 # clusterctl version -o json
 
+echo "# Install helm..."
+curl -o get-helm-3.sh -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+sudo sh get-helm-3.sh
+# helm version
+
 # Maybe will require to change to package installatiom
 echo "# Install docker by script..."
 curl -o get-docker.sh -fsSL https://get.docker.com
@@ -34,11 +39,6 @@ VERSION_KIND="v0.20.0"
 curl -o kind -fsSL https://kind.sigs.k8s.io/dl/${VERSION_KIND}/kind-linux-amd64
 sudo install -o root -g root -m 0755 kind /usr/local/bin/kind
 # kind version
-
-echo "# Install helm..."
-curl -o get-helm-3.sh -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
-sudo sh get-helm-3.sh
-# helm version
 
 echo "# complete!"
 

@@ -3,3 +3,37 @@ az vm create --name ctrl-vm --resource-group k0-rg --image Ubuntu2204 --generate
 az vm user update --name vm1-ctrl --resource-group k0-rg --username azureuser --ssh-key-value ~/.ssh/id_rsa.pub 
 
 az vm create --name vm-wrk --resource-group k0-rg --image Ubuntu2204 --generate-ssh-keys --count --ssh-key-values .\id_rsa_k0s.pub
+
+
+
+curl -o k0sctl -L https://github.com/k0sproject/k0sctl/releases/download/v0.16.0/k0sctl-linux-x64
+sudo install -o root -g root -m 0755 k0sctl /usr/local/bin/k0sctl
+
+apiVersion: k0sctl.k0sproject.io/v1beta1
+kind: Cluster
+metadata:
+  name: k0s-cluster
+spec:
+  hosts:
+  - ssh:
+      address: 10.0.0.4
+      user: azureuser
+      port: 22
+      keyPath: ~/.ssh/id_rsa_k0s
+    role: controller
+  - ssh:
+      address: 10.0.0.5
+      user: azureuser
+      port: 22
+      keyPath: ~/.ssh/id_rsa_k0s
+    role: worker
+  - ssh:
+      address: 10.0.0.6
+      user: azureuser
+      port: 22
+      keyPath: ~/.ssh/id_rsa_k0s
+    role: worker
+  k0s:
+    version: v1.28.2+k0s.0
+    dynamicConfig: false
+    config: {}

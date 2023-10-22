@@ -1,0 +1,55 @@
+1  sudo apt update
+    2  sudo apt upgrade -y
+    3  sudo swapoff
+    4  sudo swapoff -a
+    5  sudo ufw disable
+    6  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg 
+    7  sudo apt-get update
+    8  sudo apt-get upgrade -y
+    9  wget https://github.com/containernetworking/plugins/releases/download/v1.3.0/cni-plugins-linux-amd64-v1.3.0.tgz
+   10  sudo mkdir -p /opt/cni/bin
+   11  sudo tar Cxzvf /opt/cni/bin cni-plugins-linux-amd64-v1.3.0.tgz
+   12  sudo mkdir -p /etc/containerd
+   13  containerd config default | sudo tee /etc/containerd/config.tom
+   14  cat <<EOF | sudo tee /etc/modules-load.d/containerd.conf
+   15  overlay
+   16  br_netfilter
+   17  EOF
+   18  sudo modprobe overlay
+   19  sudo modprobe br_netfilter
+   20  cat <<EOF | sudo tee /etc/sysctl.d/99-kubernetes-cri.conf
+   21  net.bridge.bridge-nf-call-iptables  = 1
+   22  net.ipv4.ip_forward                 = 1
+   23  net.bridge.bridge-nf-call-ip6tables = 1
+   24  EOF
+   25  sudo sysctl --system
+   26  sudo systemctl restart containerd
+   27  sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
+   28  sudo kubeadm config images pull
+   29  local_ip="$(ip --json addr show eth0 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
+   30  sudo apt install jq
+   31  qqq
+   32  clear
+   33  local_ip="$(ip --json addr show eth0 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
+   34  echo $local_ip
+   35  cat > /etc/default/kubelet << EOF
+   36  KUBELET_EXTRA_ARGS=--node-ip=$local_ip
+   37  EOF
+   38  sudo cat > /etc/default/kubelet << EOF
+   39  KUBELET_EXTRA_ARGS=--node-ip=$local_ip
+   40  EOF
+   41  ASTER_PRIVATE_IP=$(ip addr show eth0 | awk '/inet / {print $2}' | cut -d/ -f1)
+   42  ASTER_PRIVATE_IP=$(ip addr show eth0 | aw
+   43  echo $ASTER_PRIVATE_IP
+   44  hostname -s
+   45  mkdir -p $HOME/.kube
+   46  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   47  kubectl get nodes
+   48  watch kubectl get nodes
+   49  sudo shutdoen -r now
+   50  sudo shutdown -r now
+   51  kubectl get nodes
+   52  clear
+   53  kubectl get ns
+   54  history
+   

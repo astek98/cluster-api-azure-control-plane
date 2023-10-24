@@ -1,0 +1,27 @@
+#cloud-config
+# vim: syntax=yaml
+package_update: true
+package_upgrade: true
+
+packages:
+- apt-transport-https 
+- ca-certificates 
+- gpg
+- curl
+- jq
+
+runcmd:
+  - export USER='azureuser'
+  - export HOME='/home/azureuser'
+  - cd $HOME
+  - curl -sSLf https://get.k0s.sh | sudo sh
+  - mkdir -p /etc/k0s
+  - k0s config create > /etc/k0s/k0s.yaml
+  - k0s install controller -c /etc/k0s/k0s.yaml
+  - k0s start
+  - VERSION_KUBECTL=$(curl -L -s https://dl.k8s.io/release/stable.txt)
+  - curl -o kubectl -fsSL "https://dl.k8s.io/release/${VERSION_KUBECTL}/bin/linux/amd64/kubectl"
+  - install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+  - VERSION_CLUSTERCTL="v1.5.2"
+  - curl -o clusterctl -fsSL https://github.com/kubernetes-sigs/cluster-api/releases/download/${VERSION_CLUSTERCTL}/clusterctl-linux-amd64
+  - install -o root -g root -m 0755 clusterctl /usr/local/bin/clusterctl
